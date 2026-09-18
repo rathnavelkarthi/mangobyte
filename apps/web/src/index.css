@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: pan-y;
+  overscroll-behavior-x: none;
+}
+
+body {
+  font-family: "Newsreader", Georgia, serif;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background-color: hsl(24 32% 90%);
+  color: hsl(330 28% 12%);
+  overscroll-behavior-x: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: pan-y;
+}
+
+button, a, input, select, textarea {
+  touch-action: manipulation;
+}
+
+.font-display {
+  font-family: "Archivo Black", "Arial Black", sans-serif;
+}
+
+.font-mono {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+::selection {
+  background: hsl(22 62% 45%);
+  color: hsl(24 32% 92%);
+}
+
+/*
+  ---break---
+*/
+
+@layer base {
+  :root {
+    --background: 24 32% 90%;
+    --foreground: 330 28% 12%;
+    --card: 24 32% 90%;
+    --card-foreground: 330 28% 12%;
+    --popover: 24 32% 90%;
+    --popover-foreground: 330 28% 12%;
+    --primary: 324 36% 15%;
+    --primary-foreground: 24 32% 92%;
+    --secondary: 20 30% 84%;
+    --secondary-foreground: 330 28% 12%;
+    --muted: 20 24% 84%;
+    --muted-foreground: 330 10% 34%;
+    --accent: 22 62% 45%;
+    --accent-foreground: 24 32% 92%;
+    --destructive: 0 70% 44%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 330 20% 18%;
+    --input: 330 20% 18%;
+    --ring: 22 62% 45%;
+    --radius: 0rem;
+    --sidebar-background: 24 32% 90%;
+    --sidebar-foreground: 330 28% 12%;
+    --sidebar-primary: 324 36% 15%;
+    --sidebar-primary-foreground: 24 32% 92%;
+    --sidebar-accent: 20 30% 84%;
+    --sidebar-accent-foreground: 330 28% 12%;
+    --sidebar-border: 330 20% 18%;
+    --sidebar-ring: 22 62% 45%;
+
+    --paper: 24 32% 90%;
+    --blush: 18 36% 82%;
+    --aubergine: 324 36% 15%;
+    --aubergine-deep: 320 42% 9%;
+    --copper: 22 62% 45%;
+    --ink: 330 28% 12%;
+  }
+}
+
+@layer utilities {
+  .bg-paper { background-color: hsl(var(--paper)); }
+  .bg-blush { background-color: hsl(var(--blush)); }
+  .bg-aubergine { background-color: hsl(var(--aubergine)); }
+  .bg-aubergine-deep { background-color: hsl(var(--aubergine-deep)); }
+  .bg-copper { background-color: hsl(var(--copper)); }
+  .text-ink { color: hsl(var(--ink)); }
+  .text-paper { color: hsl(var(--paper)); }
+  .text-copper { color: hsl(var(--copper)); }
+  .text-blush { color: hsl(var(--blush)); }
+  .border-line { border-color: hsl(var(--ink) / 0.28); }
+  .border-line-light { border-color: hsl(var(--paper) / 0.25); }
+  .border-copper { border-color: hsl(var(--copper)); }
+  .shadow-hard { box-shadow: 8px 8px 0 0 hsl(var(--aubergine-deep)); }
+  .shadow-hard-sm { box-shadow: 5px 5px 0 0 hsl(var(--aubergine-deep)); }
+  .shadow-hard-copper { box-shadow: 8px 8px 0 0 hsl(var(--copper)); }
+  .bg-dots {
+    background-image: radial-gradient(hsl(var(--ink) / 0.22) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .bg-dots-light {
+    background-image: radial-gradient(hsl(var(--paper) / 0.16) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .bg-gridlines {
+    background-image:
+      linear-gradient(hsl(var(--ink) / 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--ink) / 0.08) 1px, transparent 1px);
+    background-size: 88px 88px;
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .pl-safe {
+    padding-left: env(safe-area-inset-left, 0px);
+  }
+  .pr-safe {
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+}
+
+@keyframes dial-rotate {
+  to { transform: rotate(360deg); }
+}
+
+.animate-dial {
+  animation: dial-rotate 48s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-dial { animation: none; }
+}
