@@ -36,4 +36,4 @@ Thumbs.db
 # Zip and temporary exports
 *.zip
 *.pdf
-
+vault/temp/
