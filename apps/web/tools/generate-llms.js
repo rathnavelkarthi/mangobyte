@@ -32,9 +32,7 @@ const EXTRACTION_REGEX = {
 
 function cleanContent(content) {
 	return content
-		.replace(CLEAN_CONTENT_REGEX.comments, '')
-		.replace(CLEAN_CONTENT_REGEX.templateLiterals, '""')
-		.replace(CLEAN_CONTENT_REGEX.strings, '""');
+		.replace(CLEAN_CONTENT_REGEX.comments, '');
 }
 
 function cleanText(text) {
@@ -91,7 +89,9 @@ function extractRoutes(appJsxPath) {
 }
 
 function findReactFiles(dir) {
-	return fs.readdirSync(dir).map(item => path.join(dir, item));
+	return fs.readdirSync(dir)
+		.filter(item => item.endsWith('.jsx') || item.endsWith('.js') || item.endsWith('.tsx'))
+		.map(item => path.join(dir, item));
 }
 
 function extractHelmetData(content, filePath, routes) {
@@ -154,38 +154,45 @@ function processPageFile(filePath, routes) {
 }
 
 function main() {
-	const pagesDir = path.join(process.cwd(), 'src', 'pages');
-	const appJsxPath = path.join(process.cwd(), 'src', 'App.jsx');
+	try {
+		const baseDir = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+		const rootDir = fs.existsSync(path.join(process.cwd(), 'src')) ? process.cwd() : baseDir;
+		const pagesDir = path.join(rootDir, 'src', 'pages');
+		const appJsxPath = path.join(rootDir, 'src', 'App.jsx');
 
-	let pages = [];
+		let pages = [];
 
-	if (!fs.existsSync(pagesDir)) {
-		pages.push(processPageFile(appJsxPath, new Map()))
-		pages = pages.filter(Boolean);
-	} else {
-		const routes = extractRoutes(appJsxPath);
-		const reactFiles = findReactFiles(pagesDir);
+		if (!fs.existsSync(pagesDir)) {
+			pages.push(processPageFile(appJsxPath, new Map()));
+			pages = pages.filter(Boolean);
+		} else {
+			const routes = extractRoutes(appJsxPath);
+			const reactFiles = findReactFiles(pagesDir);
 
-		pages = reactFiles
-			.map(filePath => processPageFile(filePath, routes))
-			.filter(Boolean);
+			pages = reactFiles
+				.map(filePath => processPageFile(filePath, routes))
+				.filter(Boolean);
+		}
+
+		if (pages.length === 0) {
+			console.warn('⚠️ No pages with Helmet components found, using default metadata.');
+			pages = [{
+				url: '/',
+				title: 'Mangobite — AI Apps & Software Development, Engineered',
+				description: 'Production-grade AI applications, custom software platforms and data infrastructure — engineered like load-bearing structures.'
+			}];
+		}
+
+		const llmsTxtContent = generateLlmsTxt(pages);
+		const outputPath = path.join(rootDir, 'public', 'llms.txt');
+
+		ensureDirectoryExists(path.dirname(outputPath));
+		fs.writeFileSync(outputPath, llmsTxtContent, 'utf8');
+		console.log('✅ Generated public/llms.txt successfully.');
+	} catch (err) {
+		console.warn('⚠️ generate-llms warning:', err.message);
 	}
-
-	if (pages.length === 0) {
-		console.error('❌ No pages with Helmet components found!');
-		process.exit(1);
-	}
-
-
-	const llmsTxtContent = generateLlmsTxt(pages);
-	const outputPath = path.join(process.cwd(), 'public', 'llms.txt');
-
-	ensureDirectoryExists(path.dirname(outputPath));
-	fs.writeFileSync(outputPath, llmsTxtContent, 'utf8');
 }
 
-const isMainModule = import.meta.url === `file://${process.argv[1]}`;
+main();
 
-if (isMainModule) {
-	main();
-}

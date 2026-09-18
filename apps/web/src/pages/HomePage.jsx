@@ -367,10 +367,10 @@ const HomePage = () => {
                 <div className="mx-auto max-w-4xl px-4 sm:px-8 py-16 sm:py-20 text-center lg:py-28">
                     <Crosshair className="mx-auto mb-8 h-6 w-6 text-copper" strokeWidth={1} />
                     <blockquote className="font-display text-3xl uppercase leading-tight tracking-tight sm:text-4xl md:text-5xl">
-                        We don't decorate.<br />We <span className="text-copper">engineer.</span>
+                        We don&apos;t decorate.<br />We <span className="text-copper">engineer.</span>
                     </blockquote>
                     <p className="mx-auto mt-8 max-w-2xl text-lg italic leading-relaxed text-ink/75">
-                        Most AI demos die in production. Ours don't — because we treat models, data and interfaces
+                        Most AI demos die in production. Ours don&apos;t — because we treat models, data and interfaces
                         as one load-bearing structure, drawn to specification and tested under load before anyone
                         signs the handover.
                     </p>
@@ -404,7 +404,7 @@ const HomePage = () => {
                     <div>
                         <span className="font-mono text-xs tracking-[0.3em] text-copper">[06]</span>
                         <h2 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl uppercase leading-none tracking-tight">
-                            Tell us what<br />you're building.
+                            Tell us what<br />you&apos;re building.
                         </h2>
                         <p className="mt-6 max-w-md text-base sm:text-lg leading-relaxed text-ink/75">
                             Send a brief — two sentences is enough. We reply within one working day with a
