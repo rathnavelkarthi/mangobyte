@@ -1,0 +1,36 @@
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # 1. If file exists directly in dist/, serve it
+  RewriteCond %{DOCUMENT_ROOT}/dist/%{REQUEST_URI} -f
+  RewriteRule ^(.*)$ dist/$1 [L]
+
+  # 2. If directory exists in dist/, serve it
+  RewriteCond %{DOCUMENT_ROOT}/dist/%{REQUEST_URI} -d
+  RewriteRule ^(.*)$ dist/$1/ [L]
+
+  # 3. Fallback to dist/index.html for SPA routing
+  RewriteCond %{DOCUMENT_ROOT}/dist/index.html -f
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^.*$ dist/index.html [L]
+
+  # 4. Fallback if dist/apps/web/ is used
+  RewriteCond %{DOCUMENT_ROOT}/dist/apps/web/index.html -f
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^.*$ dist/apps/web/index.html [L]
+</IfModule>
+
+# Caching and PWA headers
+<IfModule mod_headers.c>
+  <FilesMatch "(sw\.js|manifest\.json)$">
+    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+
+  <FilesMatch "\.(js|css|svg|png|jpg|jpeg|gif|webp|woff|woff2|ttf|eot)$">
+    Header set Cache-Control "max-age=31536000, public, immutable"
+  </FilesMatch>
+</IfModule>

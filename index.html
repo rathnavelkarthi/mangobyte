@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0; url=/dist/" />
+    <script>
+      // Transparent redirect to dist if served without rewrite
+      if (!window.location.pathname.startsWith('/dist/')) {
+        window.location.replace('/dist/' + window.location.search + window.location.hash);
+      }
+    </script>
+    <title>Mangobite — AI Apps &amp; Software Development, Engineered</title>
+  </head>
+  <body>
+    <noscript>
+      <p>Redirecting to <a href="/dist/">Mangobite</a>...</p>
+    </noscript>
+  </body>
+</html>
